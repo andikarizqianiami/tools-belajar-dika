@@ -48,6 +48,8 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
+    console.log('Processing file:', file?.name, file?.type);
+
     if (!file) {
       return NextResponse.json(
         { error: 'No file uploaded' },
@@ -60,12 +62,14 @@ export async function POST(request: NextRequest) {
 
     // Process based on file type
     if (file.type === 'application/pdf') {
+      console.log('Processing PDF...');
       const data = await (pdfParse as any)(buffer);
       text = data.text;
     } else if (
       file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
       file.type === 'application/msword'
     ) {
+      console.log('Processing DOCX...');
       const result = await mammoth.extractRawText({ buffer });
       text = result.value;
     } else if (
@@ -74,12 +78,15 @@ export async function POST(request: NextRequest) {
       file.name.endsWith('.pptx') ||
       file.name.endsWith('.ppt')
     ) {
+      console.log('Processing PPTX...');
       text = await extractPPTXText(buffer);
     } else if (file.type.startsWith('text/')) {
+      console.log('Processing TEXT...');
       text = buffer.toString('utf-8');
     } else {
+      console.error('Unsupported file type:', file.type);
       return NextResponse.json(
-        { error: 'Unsupported file type' },
+        { error: `Unsupported file type: ${file.type}` },
         { status: 400 }
       );
     }
@@ -97,6 +104,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('Text extracted successfully. Length:', text.length);
+
     return NextResponse.json({
       text,
       fileName: file.name,
@@ -105,8 +114,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Error extracting text:', error);
+    console.error('Error stack:', error.stack);
     return NextResponse.json(
-      { error: error.message || 'Failed to extract text' },
+      { error: error.message || 'Failed to extract text from file' },
       { status: 500 }
     );
   }
