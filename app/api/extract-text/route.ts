@@ -15,9 +15,17 @@ async function extractPPTXText(buffer: Buffer): Promise<string> {
       .filter(filename => filename.startsWith('ppt/slides/slide') && filename.endsWith('.xml'))
       .sort();
 
+    console.log(`Found ${slideFiles.length} slides in PPTX`);
+
     for (const filename of slideFiles) {
       slideNumber++;
       const file = zip.files[filename];
+      
+      if (!file) {
+        console.warn(`Slide file not found: ${filename}`);
+        continue;
+      }
+      
       const content = await file.async('text');
       
       // Extract text from XML (remove all XML tags)
@@ -32,13 +40,15 @@ async function extractPPTXText(buffer: Buffer): Promise<string> {
       }
     }
 
-    if (!allText) {
-      throw new Error('No text found in PPTX file');
+    if (!allText || allText.trim().length === 0) {
+      throw new Error('No text content found in PPTX file. The file might be empty or contain only images.');
     }
 
+    console.log(`Extracted ${allText.length} characters from PPTX`);
     return allText;
   } catch (error: any) {
     console.error('PPTX parsing error:', error);
+    console.error('Error details:', error.message, error.stack);
     throw new Error(`Failed to parse PPTX: ${error.message}`);
   }
 }
