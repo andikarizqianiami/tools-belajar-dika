@@ -92,18 +92,45 @@ export class AIProvider {
         'Authorization': `Bearer ${this.apiKey}`,
       },
       body: JSON.stringify({
-        model: process.env.AI_MODEL || 'openai/gpt-oss-20b',
+        model: process.env.AI_MODEL || 'llama-3.3-70b-versatile',
         messages,
         temperature,
+        max_tokens: 2000,
       }),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`Groq API error: ${error.error?.message || response.statusText}`);
+      const errorText = await response.text();
+      let errorMessage = response.statusText;
+      
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.error?.message || errorMessage;
+      } catch {
+        errorMessage = errorText || errorMessage;
+      }
+      
+      throw new Error(`Groq API error: ${errorMessage}`);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    if (!responseText || responseText.trim().length === 0) {
+      throw new Error('Empty response from Groq API');
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (error) {
+      console.error('Failed to parse Groq response:', responseText);
+      throw new Error('Invalid JSON response from Groq API');
+    }
+
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error('Invalid response structure from Groq API');
+    }
+
     return {
       content: data.choices[0].message.content,
       provider: 'groq',
