@@ -55,10 +55,12 @@ async function extractPPTXText(buffer: Buffer): Promise<string> {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Extract text API called');
+    
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
-    console.log('Processing file:', file?.name, file?.type);
+    console.log('File received:', file?.name, file?.type, file?.size);
 
     if (!file) {
       return NextResponse.json(
@@ -67,71 +69,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    let text = '';
-
-    // Process based on file type
-    if (file.type === 'application/pdf') {
-      console.log('Processing PDF...');
-      const data = await (pdfParse as any)(buffer);
-      text = data.text;
-    } else if (
-      file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-      file.type === 'application/msword'
-    ) {
-      console.log('Processing DOCX...');
-      const result = await mammoth.extractRawText({ buffer });
-      text = result.value;
-    } else if (
-      file.type === 'application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
-      file.type === 'application/vnd.ms-powerpoint' ||
-      file.name.endsWith('.pptx') ||
-      file.name.endsWith('.ppt')
-    ) {
-      console.log('Processing PPTX...');
-      // TEMPORARY: Return error for PPTX while we debug
-      return NextResponse.json(
-        { error: 'PPTX support is temporarily disabled. Please use PDF, DOCX, or TXT files.' },
-        { status: 400 }
-      );
-      // text = await extractPPTXText(buffer);
-    } else if (file.type.startsWith('text/')) {
-      console.log('Processing TEXT...');
-      text = buffer.toString('utf-8');
-    } else {
-      console.error('Unsupported file type:', file.type);
-      return NextResponse.json(
-        { error: `Unsupported file type: ${file.type}` },
-        { status: 400 }
-      );
+    // For now, only support plain text to test
+    if (file.type.startsWith('text/')) {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const text = buffer.toString('utf-8');
+      
+      console.log('Text file processed successfully. Length:', text.length);
+      
+      return NextResponse.json({
+        text,
+        fileName: file.name,
+        fileType: file.type,
+        size: file.size,
+      });
     }
 
-    // Clean up text
-    text = text
-      .replace(/\s+/g, ' ') // Replace multiple spaces with single space
-      .replace(/\n{3,}/g, '\n\n') // Replace multiple newlines with double newline
-      .trim();
+    // All other types return "not supported yet" temporarily
+    return NextResponse.json(
+      { error: `File type ${file.type} is temporarily disabled for debugging. Please use .txt files for now.` },
+      { status: 400 }
+    );
 
-    if (!text || text.length === 0) {
-      return NextResponse.json(
-        { error: 'No text extracted from file' },
-        { status: 400 }
-      );
-    }
-
-    console.log('Text extracted successfully. Length:', text.length);
-
-    return NextResponse.json({
-      text,
-      fileName: file.name,
-      fileType: file.type,
-      size: file.size,
-    });
   } catch (error: any) {
-    console.error('Error extracting text:', error);
+    console.error('Error in extract-text API:', error);
     console.error('Error stack:', error.stack);
     return NextResponse.json(
-      { error: error.message || 'Failed to extract text from file' },
+      { error: `Server error: ${error.message}` },
       { status: 500 }
     );
   }
