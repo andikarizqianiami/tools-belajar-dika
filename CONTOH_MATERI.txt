@@ -1,0 +1,53 @@
+FOTOSINTESIS - Materi Biologi
+
+Pengertian Fotosintesis
+Fotosintesis adalah proses biokimia yang dilakukan oleh tumbuhan hijau, alga, dan beberapa jenis bakteri untuk mengubah energi cahaya menjadi energi kimia dalam bentuk glukosa. Proses ini sangat penting bagi kehidupan di Bumi karena menghasilkan oksigen yang dibutuhkan oleh makhluk hidup lainnya.
+
+Tempat Terjadinya Fotosintesis
+Fotosintesis terjadi di dalam kloroplas, khususnya di bagian daun tumbuhan. Kloroplas mengandung pigmen hijau yang disebut klorofil. Klorofil berperan penting dalam menangkap energi cahaya matahari yang kemudian digunakan dalam proses fotosintesis.
+
+Bahan-Bahan Fotosintesis
+Untuk melakukan fotosintesis, tumbuhan memerlukan beberapa bahan baku:
+1. Karbon dioksida (CO2) - diambil dari udara melalui stomata pada daun
+2. Air (H2O) - diserap oleh akar dari tanah
+3. Cahaya matahari - sebagai sumber energi
+4. Klorofil - sebagai pigmen penangkap cahaya
+
+Tahapan Fotosintesis
+Fotosintesis terjadi dalam dua tahap utama:
+
+1. Reaksi Terang (Light Reaction)
+Reaksi terang terjadi di tilakoid kloroplas dan memerlukan cahaya matahari. Dalam tahap ini:
+- Cahaya ditangkap oleh klorofil
+- Air dipecah menjadi hidrogen dan oksigen (fotolisis)
+- Oksigen dilepaskan ke atmosfer
+- Energi disimpan dalam bentuk ATP dan NADPH
+
+2. Reaksi Gelap (Dark Reaction / Siklus Calvin)
+Reaksi gelap terjadi di stroma kloroplas dan tidak memerlukan cahaya secara langsung. Dalam tahap ini:
+- CO2 dari udara diikat
+- ATP dan NADPH dari reaksi terang digunakan
+- Glukosa (C6H12O6) terbentuk sebagai hasil akhir
+
+Persamaan Kimia Fotosintesis
+Persamaan umum fotosintesis dapat dituliskan sebagai:
+6CO2 + 6H2O + Cahaya → C6H12O6 + 6O2
+
+Faktor-Faktor yang Mempengaruhi Fotosintesis
+Beberapa faktor yang dapat mempengaruhi laju fotosintesis:
+1. Intensitas cahaya - semakin tinggi intensitas cahaya (sampai titik jenuh), semakin cepat fotosintesis
+2. Konsentrasi CO2 - semakin tinggi konsentrasi CO2, semakin cepat fotosintesis
+3. Suhu - suhu optimal untuk fotosintesis sekitar 30-40°C
+4. Ketersediaan air - air diperlukan sebagai bahan baku
+5. Kandungan klorofil - semakin banyak klorofil, semakin efektif fotosintesis
+
+Manfaat Fotosintesis
+Fotosintesis memiliki banyak manfaat penting:
+1. Menghasilkan oksigen untuk respirasi makhluk hidup
+2. Menghasilkan makanan (glukosa) untuk tumbuhan dan makhluk hidup lainnya
+3. Mengurangi kadar CO2 di atmosfer
+4. Mempertahankan keseimbangan ekosistem
+5. Sumber energi fosil (batubara, minyak bumi) berasal dari tumbuhan purba yang berfotosintesis
+
+Kesimpulan
+Fotosintesis adalah proses vital yang menjadi dasar kehidupan di Bumi. Proses ini tidak hanya menghasilkan makanan bagi tumbuhan, tetapi juga menyediakan oksigen dan mengurangi karbon dioksida di atmosfer. Memahami fotosintesis penting untuk memahami bagaimana ekosistem berfungsi dan bagaimana kita dapat menjaga keseimbangan lingkungan.
