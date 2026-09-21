@@ -62,29 +62,16 @@ export class FileProcessor {
     if (!response.ok) {
       let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
       try {
-        const error = await response.json();
-        errorMessage = error.error || errorMessage;
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
       } catch {
-        const errorText = await response.text();
-        errorMessage = errorText || errorMessage;
+        // If JSON parsing fails, use status text
       }
       throw new Error(errorMessage);
     }
 
-    const responseText = await response.text();
+    const data = await response.json();
     
-    if (!responseText || responseText.trim().length === 0) {
-      throw new Error('Empty response from server');
-    }
-
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (error) {
-      console.error('Failed to parse response:', responseText);
-      throw new Error('Invalid response from server. Please try again.');
-    }
-
     if (!data.text) {
       throw new Error('No text extracted from PDF file');
     }
@@ -105,29 +92,16 @@ export class FileProcessor {
     if (!response.ok) {
       let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
       try {
-        const error = await response.json();
-        errorMessage = error.error || errorMessage;
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
       } catch {
-        const errorText = await response.text();
-        errorMessage = errorText || errorMessage;
+        // If JSON parsing fails, use status text
       }
       throw new Error(errorMessage);
     }
 
-    const responseText = await response.text();
+    const data = await response.json();
     
-    if (!responseText || responseText.trim().length === 0) {
-      throw new Error('Empty response from server');
-    }
-
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (error) {
-      console.error('Failed to parse response:', responseText);
-      throw new Error('Invalid response from server. Please try again.');
-    }
-
     if (!data.text) {
       throw new Error('No text extracted from DOCX file');
     }
@@ -148,29 +122,16 @@ export class FileProcessor {
     if (!response.ok) {
       let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
       try {
-        const error = await response.json();
-        errorMessage = error.error || errorMessage;
+        const errorData = await response.json();
+        errorMessage = errorData.error || errorMessage;
       } catch {
-        const errorText = await response.text();
-        errorMessage = errorText || errorMessage;
+        // If JSON parsing fails, use status text
       }
       throw new Error(errorMessage);
     }
 
-    const responseText = await response.text();
+    const data = await response.json();
     
-    if (!responseText || responseText.trim().length === 0) {
-      throw new Error('Empty response from server');
-    }
-
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (error) {
-      console.error('Failed to parse response:', responseText);
-      throw new Error('Invalid response from server. Please try again.');
-    }
-
     if (!data.text) {
       throw new Error('No text extracted from PPTX file');
     }
