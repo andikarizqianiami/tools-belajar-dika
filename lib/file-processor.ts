@@ -60,11 +60,35 @@ export class FileProcessor {
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to extract PDF text');
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error || errorMessage;
+      } catch {
+        const errorText = await response.text();
+        errorMessage = errorText || errorMessage;
+      }
+      throw new Error(errorMessage);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    if (!responseText || responseText.trim().length === 0) {
+      throw new Error('Empty response from server');
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (error) {
+      console.error('Failed to parse response:', responseText);
+      throw new Error('Invalid response from server. Please try again.');
+    }
+
+    if (!data.text) {
+      throw new Error('No text extracted from PDF file');
+    }
+
     return data.text;
   }
 
@@ -79,11 +103,35 @@ export class FileProcessor {
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to extract DOCX text');
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error || errorMessage;
+      } catch {
+        const errorText = await response.text();
+        errorMessage = errorText || errorMessage;
+      }
+      throw new Error(errorMessage);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    if (!responseText || responseText.trim().length === 0) {
+      throw new Error('Empty response from server');
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (error) {
+      console.error('Failed to parse response:', responseText);
+      throw new Error('Invalid response from server. Please try again.');
+    }
+
+    if (!data.text) {
+      throw new Error('No text extracted from DOCX file');
+    }
+
     return data.text;
   }
 
@@ -98,11 +146,35 @@ export class FileProcessor {
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to extract PPTX text');
+      let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+      try {
+        const error = await response.json();
+        errorMessage = error.error || errorMessage;
+      } catch {
+        const errorText = await response.text();
+        errorMessage = errorText || errorMessage;
+      }
+      throw new Error(errorMessage);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    if (!responseText || responseText.trim().length === 0) {
+      throw new Error('Empty response from server');
+    }
+
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (error) {
+      console.error('Failed to parse response:', responseText);
+      throw new Error('Invalid response from server. Please try again.');
+    }
+
+    if (!data.text) {
+      throw new Error('No text extracted from PPTX file');
+    }
+
     return data.text;
   }
 
