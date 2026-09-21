@@ -89,7 +89,12 @@ export async function POST(request: NextRequest) {
       file.name.endsWith('.ppt')
     ) {
       console.log('Processing PPTX...');
-      text = await extractPPTXText(buffer);
+      // TEMPORARY: Return error for PPTX while we debug
+      return NextResponse.json(
+        { error: 'PPTX support is temporarily disabled. Please use PDF, DOCX, or TXT files.' },
+        { status: 400 }
+      );
+      // text = await extractPPTXText(buffer);
     } else if (file.type.startsWith('text/')) {
       console.log('Processing TEXT...');
       text = buffer.toString('utf-8');
